@@ -9,13 +9,16 @@
     "categories": [
         "Programming Languages"
     ],
-    "activationEvents": [],
+    "activationEvents": [
+        "onCommand:trainzscript.init",
+        "onCommand:workbench.action.tasks.runTask"
+    ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
                 "command": "trainzscript.init",
-                "title": "Initialize Project"
+                "title": "Initialize TrainzScript Project"
             }
         ],
         "configuration": {
@@ -47,6 +50,11 @@
                 "language": "trainzscript",
                 "scopeName": "source.trainzscript",
                 "path": "./syntaxes/trainzscript.tmLanguage.json"
+            }
+        ],
+        "taskDefinitions": [
+            {
+                "type": "trainzscript"
             }
         ]
     },

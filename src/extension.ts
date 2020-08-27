@@ -6,19 +6,51 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
+    // Use the console to output diagnostic information (console.log) and errors (console.error)
+    // This line of code will only be executed once when your extension is activated
     console.log('Extension "trainzscript" activated');
 
-    let disposable = vscode.commands.registerCommand('trainzscript.init', () => {
+    let initCmd = vscode.commands.registerCommand('trainzscript.init', () => {
         vscode.window.showInformationMessage('TrainzScript init');
-	});
+    });
 
-	context.subscriptions.push(disposable);
+    let taskProvider = vscode.tasks.registerTaskProvider('trainzscript', {
+        provideTasks() {
+            return getTrainzScriptTasks();
+        },
+        resolveTask(resolvingTask: vscode.Task): vscode.Task | undefined {
+            return resolvingTask;
+        }
+    });
+
+    context.subscriptions.push(initCmd, taskProvider);
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
     console.log('Extension "trainzscript" deactivated');
+}
 
+export enum TaskCommand {
+    compile = 'compile', 
+    install = 'install', 
+    run = 'run'
+}
+
+export interface TaskDefinition extends vscode.TaskDefinition {
+    type: 'trainzscript';
+    command: TaskCommand;
+}
+
+function getTrainzScriptTasks(): Thenable<vscode.Task[]> {
+    return new Promise((resolve, _) => {
+        resolve([
+            new vscode.Task(
+                { type: 'trainzscript', command: TaskCommand.compile },
+                vscode.TaskScope.Workspace,
+                'Compile', 'trainzscript',
+                new vscode.ShellExecution('echo "Hello World"')
+            )
+        ]);
+    });
 }
