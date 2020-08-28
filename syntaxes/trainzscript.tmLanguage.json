@@ -18,7 +18,10 @@
             "name": "meta.include.source.trainzscript"
         },
         {
-            "include": "#code"
+            "include": "#comments"
+        },
+        {
+            "include": "#class"
         }
     ],
     "repository": {
@@ -47,7 +50,7 @@
                 },
                 {
                     "begin": "\\bisclass\\b",
-                    "captures": {
+                    "beginCaptures": {
                         "0": {
                             "name": "storage.modifier.isclass.trainzscript"
                         }
@@ -55,7 +58,7 @@
                     "end": "(?={)",
                     "patterns": [
                         {
-                            "include": "#class-inherites"
+                            "include": "#class-inherits"
                         },
                         {
                             "include": "#comments"
@@ -95,7 +98,7 @@
                     "include": "#method"
                 },
                 {
-                    "include": "#var"
+                    "include": "#variable-declaration"
                 },
                 {
                     "include": "#trainz-classes"
@@ -105,24 +108,20 @@
                 },
                 {
                     "include": "#trainz-constants"
+                },
+                {
+                    "include": "#method-call"
+                },
+                {
+                    "include": "#field-access"
                 }
             ]
         },
-        "class-inherites": {
+        "class-inherits": {
             "patterns": [
                 {
                     "match": "\\b([A-Za-z_]\\w*)\\b",
                     "name": "entity.other.inherited-class.trainzscript"
-                }
-            ]
-        },
-        "code": {
-            "patterns": [
-                {
-                    "include": "#comments"
-                },
-                {
-                    "include": "#class"
                 }
             ]
         },
@@ -132,19 +131,19 @@
                     "begin": "/\\*",
                     "captures": {
                         "0": {
-                            "name": "punctuation.definition.comment.gs"
+                            "name": "punctuation.definition.comment.trainzscript"
                         }
                     },
                     "end": "\\*/",
-                    "name": "comment.block.gs"
+                    "name": "comment.block.trainzscript"
                 },
                 {
                     "captures": {
                         "1": {
-                            "name": "comment.line.double-slash.gs"
+                            "name": "comment.line.double-slash.trainzscript"
                         },
                         "2": {
-                            "name": "punctuation.definition.comment.gs"
+                            "name": "punctuation.definition.comment.trainzscript"
                         }
                     },
                     "match": "\\s*((//).*$\\n?)"
@@ -216,7 +215,7 @@
                     "name": "keyword.operator.logical.trainzscript"
                 },
                 {
-                    "match": "(~|&|\\|)",
+                    "match": "(~|&|\\|\\^)",
                     "name": "keyword.operator.bitwise.trainzscript"
                 }
             ]
@@ -236,11 +235,17 @@
                             "name": "entity.name.function.trainzscript"
                         }
                     },
-                    "end": "\\)",
+                    "end": "(?=\\))",
                     "name": "meta.method.identifier.trainzscript",
                     "patterns": [
+                        { "include": "#all-types" },
                         {
-                            "include": "#method-parameters"
+                            "match": "\\b(\\w+)\\s*(?=,|\\))",
+                            "captures": {
+                                "1": { 
+                                    "name": "variable.parameter.source.trainzscript" 
+                                }
+                            }
                         }
                     ]
                 },
@@ -281,7 +286,7 @@
                     "include": "#strings"
                 },
                 {
-                    "include": "#var"
+                    "include": "#variable-declaration"
                 },
                 {
                     "include": "#trainz-classes"
@@ -293,6 +298,15 @@
                     "include": "#trainz-defines"
                 },
                 {
+                    "include": "#method-call"
+                },
+                {
+                    "include": "#field-access"
+                },
+                {
+                    "include": "#variable"
+                },
+                {
                     "begin": "{",
                     "end": "}",
                     "patterns": [
@@ -300,13 +314,6 @@
                             "include": "#method-body"
                         }
                     ]
-                }
-            ]
-        },
-        "method-parameters": {
-            "patterns": [
-                {
-                    "include": "#all-types"
                 }
             ]
         },
@@ -366,7 +373,7 @@
             ]
         },
         "storage-modifiers": {
-            "match": "\\b(static|final|game|public|define|thread|secured)\\b",
+            "match": "\\b(static|final|game|public|define|thread|secured|mandatory)\\b",
             "name": "storage.modifier.source.trainzscript"
         },
         "strings": {
@@ -416,7 +423,7 @@
             ]
         },
         "trainz-classes": {
-            "match": "\\b(AiHornMsg|AITrainScope|Asset|AssetCheckListHandler|BaseIndustry|BaseIndustryInfo|BasePortal|Bogey|Browser|BrowserInterface|BuddyInfo|Buildable|Cabin|CabinControl|CabinControlSetting|CabinData|CarSignal|ChannelMessage|ChatChannel|CheckBoxHandler|CheckListGroupHandler|CheckListPropertyHandler|Command|ConditionalScenarioBehavior|ConfigAssetGroupHandler|ConfigAssetHandler|ConsistHelperInfo|ConsistListHelper|Constructors|ConstructorsBase|ControlSettingsManager|Crossing|CustomCommand|DefaultLocomotiveCabin|DefaultSteamCabin|DefaultSteamCabinData|DLCInfo|DLCStore|DriverCharacter|DriverCommand|DriverCommands|DriverScheduleCommand|DriversInfo|EnumeratedAssetHandler|EnumeratedGameObjectHandler|EnumeratedMultiPropertyHandler|EnumeratedPropertyHandler|Flags|GameObject|GameplayMenu|GameplayMenuBase|GameplayMenuMobile|GenericBoolHandler|GenericIndustry|GenericIntNumberHandler|GenericListHandler|GenericPassengerStation|GenericStringHandler|GenericTimeHandler|GSObject|GSTrackSearch|HTMLBuffer|HTMLBufferStatic|HTMLPropertyGroup|HTMLPropertyHandler|HTMLWindow|Image|Industry|IndustryProcessInfo|IndustryProductInfo|IndustryProductInfoCollection|IndustryProductInfoComplete|IndustryProductInfoProcess|IndustryProductInfoQueues|IndustryProductInfoTracks|IndustryTrainController|Interface|InterfaceAlert|InterfaceObjective|IPICProcess|IPICQueue|IPICTrack|ITCTrainCommand|ITCTrainMonitor|ITCTrainValues|Junction|JunctionBase|JunctionBaseGameObject|JunctionPermitInfo|KUID|KUIDList|Library|LinkedData|LinkedList|LoadHelperInfo|LoadingReport|Locomotive|Log|LogScope|MapObject|Math|Menu|MeshObject|Message|ModuleScript|MultiplayerGame|Navigate|NavPoint|NavPoints|NumberValueInt|OAChat|Objective|ObjectiveList|OnlineAccess|OnlineGroup|Orientation|PassengerStationInfo|Permit|ProductFilter|ProductQueue|PropertyBrowser|PropertyObject|PropertyValue|RadioButtonGroupHandler|RadioButtonListHandler|Requirement|ResourceRequirement|Router|ScenarioBehavior|SceneryWithTrack|Schedule|ScheduleHistoryRec|SecurityToken|Servlet|ServletHTTPReply|ServletHTTPRequest|SessionVariable_VariableInfo|SessionVariables|ShuntTrack|Signal|SignalBehaviour|SignalInteriorCabinData|Soup|SpecificVehiclesInfo|StationBehaviour|Str|StringTable|Timetable|TimetableState|Track|TrackCircuitBlock|TrackCircuitDetector|TrackLoadInfo|TrackMark|Trackside|Train|TrainHelperInfo|TrainRequirement|TrainTimetable|TrainTimetableItem|TrainUtil|Trainz|TrainzAssetSearch|TrainzGameObject|TrainzScript|TrainzScriptBase|Trigger|Turntable|Vehicle|VehicleDescriptor|VehicleHelperInfo|VehicleTypesInfo|VHIDriversInfo|VHISpecificVehiclesInfo|VHIVehicleTypesInfo|WaybillManager|World|World1|WorldCoordinate)\\b",
+            "match": "\\b(AiHornMsg|AITrainScope|Asset|AssetCheckListHandler|BaseIndustry|BaseIndustryInfo|BasePortal|Bogey|Browser|BrowserInterface|BuddyInfo|Buildable|Cabin|CabinControl|CabinControlSetting|CabinData|CarSignal|ChannelMessage|ChatChannel|CheckBoxHandler|CheckListGroupHandler|CheckListPropertyHandler|Command|ConditionalScenarioBehavior|ConfigAssetGroupHandler|ConfigAssetHandler|ConsistHelperInfo|ConsistListHelper|Constructors|ConstructorsBase|ControlSettingsManager|Crossing|CustomCommand|DefaultLocomotiveCabin|DefaultSteamCabin|DefaultSteamCabinData|DLCInfo|DLCStore|DriverCharacter|DriverCommand|DriverCommands|DriverScheduleCommand|DriversInfo|EnumeratedAssetHandler|EnumeratedGameObjectHandler|EnumeratedMultiPropertyHandler|EnumeratedPropertyHandler|Flags|GameObject|GameplayMenu|GameplayMenuBase|GameplayMenuMobile|GenericBoolHandler|GenericIndustry|GenericIntNumberHandler|GenericListHandler|GenericPassengerStation|GenericStringHandler|GenericTimeHandler|GSObject|GSTrackSearch|HTMLBuffer|HTMLBufferStatic|HTMLPropertyGroup|HTMLPropertyHandler|HTMLWindow|Image|Industry|IndustryProcessInfo|IndustryProductInfo|IndustryProductInfoCollection|IndustryProductInfoComplete|IndustryProductInfoProcess|IndustryProductInfoQueues|IndustryProductInfoTracks|IndustryTrainController|Interface|InterfaceAlert|InterfaceObjective|IPICProcess|IPICQueue|IPICTrack|ITCTrainCommand|ITCTrainMonitor|ITCTrainValues|Junction|JunctionBase|JunctionBaseGameObject|JunctionPermitInfo|KUID|KUIDList|Library|LinkedData|LinkedList|LoadHelperInfo|LoadingReport|Locomotive|Log|LogScope|MapObject|Math|Menu|MeshObject|Message|ModuleScript|MultiplayerGame|Navigate|NavPoint|NavPoints|NumberValueInt|OAChat|Objective|ObjectiveList|OnlineAccess|OnlineGroup|Orientation|PassengerStationInfo|Permit|ProductFilter|ProductQueue|PropertyBrowser|PropertyObject|PropertyValue|RadioButtonGroupHandler|RadioButtonListHandler|Requirement|ResourceRequirement|Router|ScenarioBehavior|SceneryWithTrack|Schedule|ScheduleHistoryRec|SecurityToken|Servlet|ServletHTTPReply|ServletHTTPRequest|SessionVariable_VariableInfo|SessionVariables|ShuntTrack|Signal|SignalBehaviour|SignalInteriorCabinData|Soup|SpecificVehiclesInfo|StationBehaviour|Str|StringTable|Timetable|TimetableState|Track|TrackCircuitBlock|TrackCircuitDetector|TrackLoadInfo|TrackMark|Trackside|Train|TrainHelperInfo|TrainRequirement|TrainTimetable|TrainTimetableItem|TrainUtil|Trainz|TrainzAssetSearch|TrainzGameObject|TrainzScript|TrainzScriptBase|Trigger|Turntable|Vehicle|VehicleDescriptor|VehicleHelperInfo|VehicleTypesInfo|VHIDriversInfo|VHISpecificVehiclesInfo|VHIVehicleTypesInfo|WaybillManager|World|World1|WorldCoordinate)\\b(?:\\s*\\[\\s*\\])?",
             "name": "support.class.trainzscript"
         },
         "trainz-defines": {
@@ -427,20 +434,39 @@
             "match": "\\b(Abs|AccessProductInfo|Add|AddAssetToIndustryProductInfo|AddBuddy|AddBuddyToOnlineSession|AddCommandMenuItem|AddConsist|AddControl|AddDriverCharacter|AddDriverCommand|AddDriverScheduleCommand|AddFloatingDriverMessage|AddHandler|AddInternal|AddItem|AddKUID|AddMessage|AddObjective|AddProcessToProduct|AddProduceTrain|AddProduct|AddProductCategory|AddProductTrack|AddQueueToProduct|AddSeperator|AddSoup|AddSubmenu|AddTrain|AddUniqueNamedSoup|AddUser|AddVehicle|AddVehicleLock|AddVelocity|AdjustLoadState|AdjustMapObjectPosition|AdjustScore|AdminInstallContent|AdminListAvailableServlets|AdminListInstalledServlets|AdminProcessAdministrativeLogin|AdminStartServlet|AdminStopServlet|AdminValidateLogin|Alert|AllowManualControl|AlreadyThereStr|Announce|AppendDependencies|AppendDriverDestinations|AppendFilter|AppendProductList|AppendRequirementList|AppendVehicle|ApplySpeedLimitForStateEx|AreInTrain|AsBool|AsFloat|AsInt|AsString|Attach|BeginAITrainStuck|BeginAssetRestriction|BeginExecute|BeginLoad|BeginTrackSearch|BeginTrackSearchInDirection|BeginUnload|BringToFront|BroadcastGameplayMessage|CanAccessMultiplayer|CancelBuild|CanDisplayStateEx|CanLoadProductFromQueue|CanMoveToNextStop|CanMoveToPrevStop|CanUnloadProductToQueue|CheckBox|CheckForOncomingTrain|CheckForTrainInOverlap|Clear|ClearDriverScheduleCommands|ClearMessages|ClearNavigationPointSet|ClearObjectives|ClearParams|ClearProcess|ClearTrainCommand|ClearTrainLimitMonitor|ClearTrainTimetable|ClearVariable|ClearVariableMaximum|ClearVariableMinimum|CloneKUID|CloneSearch|CloneString|CloseAITrainScope|CloseGameplayMenu|CollectMessage|CollectOfflineMessage|CompareStrLists|CompleteJunctions|Connect|Construct|ConvertUnitsToValue|ConvertValueToUnits|Copy|CopyFilter|CountBuddies|CountConsists|CountHandlers|CountItems|CountKUIDs|CountProductMatching|CountQueuedMessages|CountTags|CountUsers|CountVehicles|CountVehiclesNotAdded|Couple|CoupleVehicle|CreateBehavior|CreateBrowser|CreateCabinSavedData|CreateGroup|CreateLoadingReport|CreateNavigationPointSet|CreateProduct|CreateScheduleCommand|CreateTrain|CreateTrainFromSoup|CreateUnloadingReport|Custom|DebugLog|DecTrainBusy|DecVariableNumber|Defocus|DeleteTrain|DeleteVehicle|Derail|DestroyAllProducts|DestroyProductMatching|DetailLog|DetailLogDisable|DetailLogEnable|DetailLogEnd|DetailLogIsEnabled|DetailLogStart|DetailWatchFunctionEnd|DetailWatchFunctionStart|DetermineUpdatedState|Disconnect|DoCoupleUp|DoDecouple|DoesAcceptProduct|DoesAcceptProductCategory|DoesAllowPermitControl|DoesAnything|DoesAnythingForSurveyor|DoesFilterTrains|DoesInstallationProvideRight|DoesMatch|DoesMatchAnd|DoesMatchAndExlcude|DoesMatchDriver|DoesMatchVehicles|DoesMatchVehicleTypes|DoesProductHaveProcess|DoesProductHaveTrack|DoesSessionContainMissingAssets|DoesSessionContainModifiedAssets|DoesSessionContainUnofficialAssets|DoesUseInput|DoesUseInputForSurveyor|DoesUseOutput|DoesUseOutputForSurveyor|DownloadSessionMissingAssets|DrawCircle|DrawImage|DrawLine|DrawPoint|DrawRect|DrawText|DrawTriangle|DriveForever|DriverBeginIssueSchedule|DriverCompleteJunctions|DriverCoupleVehicle|DriverCustomCommand|DriverDriveForever|DriverIssueSchedule|DriverSetAllowCoupling|DriverTakeJunction|DriverThroughTrackMark|DriverTurnAround|DriverVisitScenery|DriverVisitTrack|DriverVisitTrackMark|DriveThroughTrackMark|DriveThroughTrackside|DriveToIndustry|DriveToTrackside|DriveToVehicle|EnablePhysics|EnableUserCancelBuild|EnableUserStartBuild|End|EndAITrainStuck|EndAssetRestriction|EndBorder|EndCell|EndExecute|EndFontColor|EndIndent|EndLink|EndLoad|EndRow|EndScenario|EndTable|EndUnload|Escape|Exception|Execute|ExportImage|Fabs|FadeScreen|FailExecute|Find|findApproachingTrain|FindAsset|FindChannel|FindDriverCommand|FindIndex|FindIPICProcess|FindIPICQueue|FindIPICTrack|FindNearestDisplayableStateEx|FindTriggerContainingNode|FindUpdatedAssets|FindUser|FireAddCoal|Fmax|Fmin|ForceUpdate|GetActiveDriver|GetAdvisoryLimit|GetAdvisoryLimit2|GetAfter|GetAITrainMaxSpeed|GetAllowDriverOrderListReplication|GetAllowsUserControl|GetAmount|GetApproximateDisplayPPI|GetArrivedAtDestination|GetAsset|GetAssetByIndex|GetAssetByName|GetAssetIndex|GetAssetList|GetAssetName|GetAssetTitleHTMLCode|GetAssetType|GetAsSoup|GetAttachedJunctions|GetAttachedTrack|GetAttachedTrackName|GetAttachedTrackParentObject|GetAttachedTracks|GetAttention|GetAutomaticFiremanState|GetAutopilotMode|GetAutopilotStopJunction|GetAutopilotStopJunctionBase|GetAutopilotStopTrain|GetAutopilotTargetSlowing|GetAuxReservoirPressure|GetBadWeatherFog|GetBaseKUID|GetBaseString|GetBehaviors|GetBellState|GetBestProductForKUID|GetBogeyList|GetBoolDisplayValue|GetBoolValue|GetBrakeCylinderPressure|GetBrakeLightOn|GetBrakePipePressure|GetBrowser|GetBuddyIndex|GetBuddyInfo|GetBuddyProfileName|GetBuddyQueuedMessage|GetBuddyQueuedMessageData|GetBuddyStatus|GetBuddyStyle|GetBuildingProgress|GetBuildingState|GetCabinData|GetCabinSwayAmount|GetCameraFlags|GetCameraMode|GetCameraPitch|GetCameraPositionX|GetCameraPositionY|GetCameraPositionZ|GetCameraTarget|GetCameraTargetList|GetCameraYaw|GetCameraZoom|GetCarSignalState|GetCategoryClass|GetCategoryEra|GetCategoryRegion|GetChildBehaviors|GetChildRelationshipIcon|GetCleanFloatString|GetCleanTimeString|GetClickTrackSearch|GetClientLoadProgress|GetClientToServerLatency|GetCompleteIndustryViewDetailsHTMLCode|GetConfigPrefix|GetConfigSoup|GetConsist|GetControls|GetCouplerBreakageEnabled|GetCouplingDirection|GetCouplingStress|GetCreatorName|GetCrossingAutomatic|GetCrossingHasNearbyTrain|GetCrossingState|GetCurrentModule|GetCurrentProfile|GetCurrentThreadGameObject|GetCurrentTimetable|GetCurrentTimetableItem|GetCurrentTrain|GetDateInstalled|GetDCCThrottle|GetDebugString|GetDecoupleMode|GetDefaultCabinSwayAmount|GetDefaultMaximumCouplerCompressionStress|GetDefaultMaximumCouplerExpansionStress|GetDefaultMaximumCoupleVelocity|GetDefaultMaximumTractiveEffort|GetDependencyList|GetDescription|GetDescriptionHTML|GetDeviceFormFactor|GetDirection|GetDirectionRelativeToTrain|GetDirectionToTrack|GetDirectionToTrain|GetDisplayHeight|GetDisplayTime|GetDisplayType|GetDisplayWidth|GetDistance|GetDistanceBetweenTriggerAndVehicle|GetDitchlightState|GetDrainCocks|GetDriverCharacter|GetDriverCharacterList|GetDriverCommand|GetDriverCommandFilter|GetDriverCommandList|GetDriverCommands|GetDriverKUID|GetDriverName|GetDriverOrderBarVisible|GetDriverScheduleCommands|GetDriverScheduleRepeat|GetDst|GetDstIndustry|GetDstQueue|GetDstVehicle|GetDuration|GetElementProperty|GetEnabled|GetEngineParam|GetEngineSetting|GetEngineType|GetFacingRelativeToSearchDirection|GetFacingRelativeToTrain|GetFloatAsTimeString|GetForeignGameObject|GetFrontmostLocomotive|GetFrontmostLocomotiveVehicle|GetFXAttachment|GetGameChatChannel|GetGameDate|GetGameMonth|GetGameObject|GetGameTime|GetGameYear|GetGoodWeatherFog|GetGroundDrawDistance|GetGSClassName|GetHasIncompletePrerequisites|GetHeadlightState|GetHeight|GetHighBeams|GetHighbeamState|GetHostAsset|GetHours|GetHoursFromFloat|GetHTMLDescription|GetHTMLRequirementDescription|GetHTMLRequirementIcon|GetHTMLString|GetHumanReadableNameFromTrackName|GetIcon|GetIconPath|GetId|GetIgnoreList|GetIndex|GetIndexByIPICQueue|GetIndexedKUID|GetIndexedTagName|GetIndexedUser|GetIndexForNamedTag|GetIndustry|GetIndustryList|GetIndustryProductInfoCollection|GetInfoURL|GetInitialAmount|GetInitialPassengerCount|GetInputAmount|GetInputIPIQ|GetInputOutputPropertyHTMLCode|GetInputQueue|GetIntCount|GetInterfaceVisible|GetIntValue|GetIPICProcess|GetIPICProduct|GetIPICQueue|GetIPICQueueByIndex|GetIPICTrack|GetIPIQ|GetIsAtDestination|GetIsDistant|GetIsDitchFlashing|GetIsFaulty|GetIsFavorite|GetIsHome|GetIsLate|GetIsMissingDependencies|GetIsRepeater|GetIsSearchLimit|GetItem|GetItemCount|GetItemFull|GetItemIndex|GetItems|GetItemSubHandler|GetJunctionList|GetKUID|GetLanguage|GetLastVisitedBuildable|GetLastVisitedIndustry|GetLastVisitedTrack|GetLayerList|GetLayerType|GetLength|GetLibrary|GetLoadTime|GetLocalData|GetLocalisedDescription|GetLocalisedName|GetLocalisedPrice|GetLocalUserProfileName|GetLocation|GetLockedReference|GetLogString|GetManualControl|GetMapObject|GetMapObjectOrientation|GetMapObjectPosition|GetMapView|GetMass|GetMaximum|GetMaximumCouplerCompressionStress|GetMaximumCouplerExpansionStress|GetMaximumCoupleVelocity|GetMaximumCouplingStressVehicle|GetMaximumTractiveEffort|GetMeshAnimationFrame|GetMeshAnimationFrameCount|GetMessageWindowVisible|GetMetricMode|GetMinimum|GetMinutes|GetMinutesFromFloat|GetMyTrain|GetName|GetNamedControl|GetNamedSoup|GetNamedSoupAdd|GetNamedTag|GetNamedTagAsBool|GetNamedTagAsFloat|GetNamedTagAsInt|GetNamedTagAsKUID|GetNormalizedSystemTime|GetNumberOfNewPassengersPerHour|GetNumberOfPassengersToDisembark|GetObject|GetObjectBase|GetObjectName|GetObjectNameFull|GetObjectType|GetOdometerDistance|GetOnlineAccessStatus|GetOnlineGroupCookie|GetOnlineStatus|GetOnScreenHelp|GetOutputAmount|GetOutputIPIQ|GetOutputQueue|GetOverlap|GetOwnerPlayer|GetPantographState|GetParent|GetParentBehavior|GetParentObject|GetPercentBarCode|GetPercentHTMLCode|GetPeristentDataKeysWithPrefix|GetPersistentData|GetPerVehicleAmount|GetPFXEmitterLifetime|GetPFXEmitterMaxRate|GetPFXEmitterMaxSize|GetPFXEmitterMinRate|GetPFXEmitterMinSize|GetPFXEmitterPhysicsDelay|GetPFXEmitterRate|GetPFXEmitterVelocity|GetPhysicsModel|GetPlatformQueue|GetPrefix|GetPresetTrafficGraph|GetPressureParam|GetProcessDuration|GetProcessEnabled|GetProcessIndex|GetProcessIndexFromName|GetProcessInput|GetProcessIOAmount|GetProcessIOProduct|GetProcessIOQueue|GetProcessName|GetProcessNameList|GetProcessOutput|GetProcessStarted|GetProduct|GetProductCategories|GetProductCategory|GetProductFilter|GetProductID|GetProductIndex|GetProductIndexFromAsset|GetProductInfo|GetProductList|GetProductNameList|GetProductQueue|GetProductRestriction|GetProducts|GetProperties|GetPropertyAttribute|GetPropertyDescription|GetPropertyElementList|GetPropertyHandler|GetPropertyName|GetPropertyString|GetPropertyType|GetPropertyValue|GetQueue|GetQueueCount|GetQueuedMessage|GetQueueFromIndex|GetQueueIndex|GetQueueName|GetQueuePerHour|GetQueueRoundedPercent|GetQueues|GetQueueSize|GetQueueSpace|GetQueueWaybillIssuePercent|GetQueueWaybillRemain|GetRandomConsist|GetRatioOfPassengersToDisembark|GetRelatedProducts|GetRelationshipToQueue|GetRelationToTrack|GetRelativePressureParam|GetRequirements|GetResource|GetReverser|GetRunningNumber|GetSandingTractionMultiplier|GetSavesProperties|GetSceneryDrawDistance|GetScheduleObject|GetScheduleState|GetScheduleStateString|GetScore|GetSeconds|GetSecondsFromFloat|GetSelectedAssetRef|GetSelectedSubHandler|GetSessionProperties|GetSessionRuleData|GetSetting|GetSettingAsset|GetSettingAssets|GetSettingDisplayName|GetSettingName|GetSettingNames|GetSettings|GetSettingsAsFlags|GetSignalList|GetSignalLit|GetSignalState|GetSignalStateEx|GetSize|GetSmoothedVelocity|GetSpeedLimit|GetSrcIndustry|GetSrcVehicle|GetState|GetStateFlags|GetStationType|GetStationTypeName|GetStatus|GetStatusText|GetStopPosition|GetString|GetString0|GetString1|GetString10|GetString2|GetString3|GetString4|GetString5|GetString6|GetString7|GetString8|GetString9|GetStringCount|GetStringDisplayValue|GetStringTable|GetStringValue|GetSubItem|GetSubItemFull|GetSubItemIndex|GetSurveyorSavedConsist|GetSurveyorSavedConsistList|GetSystemDate|GetSystemHour|GetSystemMinute|GetSystemMonth|GetSystemSecond|GetSystemYear|GetTextureSelfIlluminationState|GetThumbnailPath|GetTimeElapsed|GetTimeOfDay|GetTimeSinceLastUserActivity|GetTimeStamp|GetTimeStringAsFloat|GetTimetableRule|GetTooltip|GetTrack|GetTrackGradient|GetTrackIndex|GetTrackInDirection|GetTrackmarkDirection|GetTrackMarkList|GetTrackName|GetTrackPriorityNumber|GetTractionMultiplier|GetTrafficGraphName|GetTrafficGraphShape|GetTrafficScale|GetTrain|GetTrainBrakes|GetTrainCommand|GetTrainDisplayName|GetTrainList|GetTrainPriorityNumber|GetTrainTimetable|GetTrainVelocity|GetTrainzAsset|GetTrainzBuild|GetTrainzStrings|GetTrainzVersion|GetTriggerList|GetTriggerTrack|GetTripMeterDistance|GetType|GetUiIsExpanded|GetUnitsString|GetUnloadTime|GetUpTo|GetUserModeFlags|GetUsername|GetUserStatus|GetValue|GetVariableMaximum|GetVariableMinimum|GetVariableNumber|GetVariableString|GetVehicle|GetVehicleKUID|GetVehicleList|GetVehicles|GetVehicleTypeFlags|GetVelocity|GetViewDetailsHTMLCode|GetVisibleInSurveyor|GetVisibleInViewDetails|GetVisibleInViewDetailsProcessList|GetWaybillIssuePercent|GetWaybillRemain|GetWaybillsWindowVisible|GetWaybillWindowVisible|GetWeatherChangeability|GetWeatherType|GetWheelslipMomentumMultiplier|GetWheelslipTractionMultiplier|GetWidth|GetWindowBottom|GetWindowHeight|GetWindowLeft|GetWindowRight|GetWindowTop|GetWindowVisible|GetWindowWidth|HandleDrainCocks|HandleLink|HandleTrain|HasBell|HasBuddy|HasBuddyQueuedMessage|HasDitchlight|HasHorn|HasKUID|HasLights|HasLoadedThisStop|HasMesh|HasMoved|HasPantographs|HasPrefix|HasReachedJunctionInnerRadius|HasSamePermissionsAs|HasSufix|HasTrack|HasTrainTimetable|HasUnloadedThisStop|HasUnseenMessages|HasUser|HasVariable|HasVariableMaximum|HasVariableMinimum|HelpButton|HighlightButtonBarElement|HREF|ImportImage|IncTrainBusy|IncVariableNumber|Info|Init|InitBasics|InitFromAsset|InitFromQueue|InitFromVehicle|InnerReEnter|InnerReEnterTrain|InterruptableLoadingSleep|IntersectFilter|IsActive|IsAlreadyAdded|IsAssetRestrictionBusy|IsAssetRestrictionInEffect|IsBuiltIn|IsChannel|IsClient|IsComplete|IsControllingTrain|IsControllingVehicle|IsCorrectlyConfigured|IsCreatedByAuran|IsCreatedByLocalUser|IsDerailed|IsEmpty|IsEnumSet|IsForSameObjectAs|IsGamePaused|IsGranted|IsInInitFromAsset|IsInTrain|IsInTrigger|IsInTunnel|IsLayerVisible|IsLoadingClient|IsLocal|IsLocallyModified|IsLocked|IsLockedVehicle|IsMoving|IsNavigationPointSetComplete|IsOccupied|IsOnBridge|IsOnTheDownloadStation|IsOvershoot|IsOwnerLocallyModified|IsOwningClient|IsPartTrainInTrigger|IsPaused|IsPayware|IsPurchasingEnabled|IsReleased|IsRunningCommand|IsScheduleRunning|IsScheduleWindowVisible|IsServer|IsStillInJunction|IsStopped|IsStopPositionValid|IsStuck|IsSubEnumSet|IssueNextCommand|IsTrainBusy|IsTrainCommand|IsTrainInTrigger|IsTrainInTriggers|IsTrainLocked|IsUserProfile|IsVehicleIgnored|IsViewDetailsVisible|IsVisible|IsWindowMinimised|ItemExists|ItemExistsChecked|JunctionInnerReEnter|JunctionReEnter|Left|LibraryCall|LightSignal|Link|Load|LoadHTMLFile|LoadHTMLString|LoadImage|LoadMap|LoadMapTSO|LoadProduct|LoadSession|LoadVehicle|LockJunction|Log|LogCallStack|LogHandlers|LogResult|LookupKUIDTable|MakeBold|MakeCell|MakeFontColor|MakeFontColorBlack|MakeFontColorWhite|MakeFontSizeLarge|MakeFontSizeMedium|MakeFontSizeSmall|MakeFontSizeTiny|MakeImage|MakeItalic|MakeLink|MakeRow|MakeSpacerCell|MakeTable|MapObjectIsInFront|MarkAdvisoryLimit|MaskProfanity|Matches|Max|MeasureStopAccuracy|MeasureTextWidth|Mid|Min|MinimiseWindow|MoveToNextStop|MoveToPrevStop|MoveToStop|NavigateThroughTrackside|NavigateToIndustry|NavigateToTrackside|NavigateToVehicle|NewBrowser|NewDriverCommand|NewDriverCommands|NewImage|NewKUIDList|NewMenu|NewProductFilter|NewSoup|NotifyProcessFinished|NotifyProcessStarted|NotifyTrackGraphObservers|NotifyTrainChanged|NotifyUser|Objective|OnAnnounce|OnAnnouncement|OnJunction|OnTrainStopped|OnTrigger|OpenAITrainScope|OpenChannelGroup|OpenGroup|OpenURL|PadZerosOnFront|Pause|PerformProcessCancelled|PerformProcessFinished|PerformProcessInput|PerformProcessOutput|PerformProcessStarted|Play2DSound|PlaySound|PlaySoundScriptEvent|PopFirstProduceTrain|PopScheduleState|PopupMenu|PostMessage|PostOfflineMessage|PresetIntValue|Print|ProceedToNextCommand|ProcessAdministrativeLogin|ProcessAdministrativeRequest|ProcessHTTPRequest|Prop|PropertyBrowserRefresh|PushScheduleState|QueryDownloadStationAccess|Quote|RadioButton|Rand|RandBool|ReconnectChannels|RedownloadAllPurchases|ReEnter|Refresh|RefreshBrowser|ReissueLastCommand|Release|ReleaseTrackPermits|RemoveAllUnlockedVehicles|RemoveBuddy|RemoveBuddyFromOnlineSession|RemoveChannel|RemoveDriverCharacter|RemoveDriverCommand|RemoveHandler|RemoveItem|RemoveKUID|RemoveNamedTag|RemoveObjective|RemoveProduct|RemoveProductCategory|RemoveQueue|RemoveQueueFromProduct|RemoveTrain|RemoveUser|RemoveVehicle|RemoveVehicleLock|RepairCoupler|Reposition|RequestPermit|RequestPermitForTrain|RequestTrackPermit|ReSendStoppedMessages|Reset|ResetAssetToInitialAmount|ResetButtons|ResetResults|ResetScrollBar|ResetTimetable|Resize|ResizeHeightToFit|RestartSession|RestoreWindow|Reverse|ReverseDirection|ReverseTrain|RevertAdvisoryLimit|RevertSessionModifiedAssets|Right|RunSchedule|RunTurnTable|Save|SearchAssets|SearchAssetsSorted|SearchNext|SearchNextObject|SendData|SendGameplayMessageToClient|SendGameplayMessageToServer|SendMessage|Set|SetAchievementAwarded|SetAchievementProgress|SetAchievementVariable|SetAdhesion|SetAdvisoryLimit|SetAdvisoryLimit2|SetAll|SetAllowDriverOrderListReplication|SetAllowsPermitControl|SetAsset|SetAssetType|SetAutomaticFiremanState|SetAutopilotHintObj|SetAutopilotJunction|SetAutopilotMode|SetAutopilotTarget|SetAutopilotTargetMinimumDistance|SetAutopilotTargetMinimumSpeed|SetBadWeatherFog|SetBail|SetBellState|SetBoolValue|SetBrakePipeEfficiency|SetBrokenBrakes|SetBrokenReverser|SetBrokenThrottle|SetBrowser|SetBuddyStyle|SetBuildingPaused|SetBuildingProgress|SetBuildingState|SetButtonOverlayStyle|SetCabinData|SetCabinSwayAmount|SetCabLightIntensity|SetCamera|SetCameraAngle|SetCameraFlags|SetCameraMode|SetCarSignalState|SetChildrenLimits|SetCloseEnabled|SetComplete|SetCompressorEfficiency|SetCouplerBreakageEnabled|SetCouplingMask|SetCrossingAutomatic|SetCrossingState|SetDCCMode|SetDCCThrottle|SetDecoupleMode|SetDecouplingMask|SetDefaultDirection|SetDefaults|SetDerailLevel|SetDirection|SetDisplayType|SetDitchlightState|SetDoorAnimationState|SetDrainCocks|SetDriverCharacter|SetDriverCommandFilter|SetDriverCommands|SetDriverKUID|SetDriverName|SetDriverOrderBarVisible|SetDriverScheduleRepeat|SetDuration|SetDynamicBrakeMode|SetElementFocus|SetElementObjectProperty|SetElementProperty|SetEnabled|SetEngineSetting|SetFillColor|SetFloatingLimit|SetFXAnimationState|SetFXAttachment|SetFXCoronaTexture|SetFXNameText|SetFXTextureReplacement|SetFXTextureReplacementTexture|SetGameDate|SetGamePaused|SetGameplayMenuMode|SetGameTime|SetGameTimeRate|SetGoodWeatherFog|SetGroundDrawDistance|SetHandBrake|SetHasDriver|SetHeadlightColor|SetHeadlightState|SetHelperIconScale|SetHighBeams|SetHighbeamState|SetHours|SetInitialAmount|SetInitialPassengerCount|SetInputAmount|SetInputIPIQ|SetInputQueue|SetIPICQueue|SetIPIQ|SetIsDitchFlashing|SetIsFavorite|SetItem|SetLastVisitedBuildable|SetLayerVisible|SetLegacyAllowDriverlessTrains|SetLineColor|SetLocalData|SetLocalisedName|SetLocation|SetLocked|SetManualThrottle|SetMapObjectOrientation|SetMapObjectPosition|SetMapView|SetMaximumCouplerCompressionStress|SetMaximumCouplerExpansionStress|SetMaximumCoupleVelocity|SetMaximumTractiveEffort|SetMesh|SetMeshAnimationFrame|SetMeshAnimationSpeed|SetMeshAnimationState|SetMeshOrientation|SetMeshTranslation|SetMeshVisible|SetMessageWindowVisible|SetMetricMode|SetMinutes|SetModeFlags|SetNamedSoup|SetNamedTag|SetNamedValue|SetNavigationPointComplete|SetNavigationPointSetVisible|SetOdometerDistance|SetOutputAmount|SetOutputIPIQ|SetOutputQueue|SetOverlayColor|SetOverriddenBeginLoadTime|SetOwnerIndustry|SetOwnerObject|SetOwnerPlayer|SetPantographState|SetParam|SetPassengerMaximumCount|SetPersistentData|SetPerVehicleAmount|SetPFXEmitterConeSize|SetPFXEmitterEmitParticles|SetPFXEmitterEndColor|SetPFXEmitterLifetime|SetPFXEmitterMaxRate|SetPFXEmitterMaxSize|SetPFXEmitterMinRate|SetPFXEmitterMinSize|SetPFXEmitterPhysicsDelay|SetPFXEmitterRate|SetPFXEmitterStartColor|SetPFXEmitterTexture|SetPFXEmitterVelocity|SetPhysicsMode|SetPitchBasedOnSpeed|SetPitchBasedOnTrack|SetPlatformName|SetPlatformQueue|SetPrefix|SetProcessDuration|SetProcessEnabled|SetProcessInput|SetProcessOutput|SetProduct|SetProductDisabled|SetProductFilter|SetProductQueueInitialAmount|SetProductRestriction|SetProperties|SetPropertyAttribute|SetPropertyHandler|SetPropertyStringValue|SetPropertyValue|SetQueueInitialCount|SetQueuePerHour|SetQueueSize|SetQueueWaybillIssuePercent|SetQueueWaybillRemain|SetRememberPosition|SetResults|SetReverser|SetRollBasedOnTrack|SetRunningCommands|SetRunningNumber|SetSandingTractionMultiplier|SetSaveAllowed|SetSavesProperties|SetSceneryDrawDistance|SetScore|SetScrollEnabled|SetSeconds|SetShouldLockControlsWhilePerformingStoppedLoad|SetShowDriverInterface|SetShowOrdersInterface|SetShowSearchInterface|SetSignal|SetSignalState|SetSignalStateEx|SetSize|SetSpeedLimit|SetStationType|SetTargetObserver|SetText|SetTextFont|SetTextureSelfIllumination|SetTooltip|SetToSurveyorSavedConsist|SetTrackPriorityNumber|SetTractionMultiplier|SetTrafficGraphPreset|SetTrafficGraphShape|SetTrafficScale|SetTrainBrakes|SetTrainCommand|SetTrainLimitMonitorLinear|SetTrainPriorityNumber|SetTrainSpeed|SetTrainTimetable|SetTrainzText|SetTripMeterDistance|SetTypeName|SetUiIsExpanded|SetUserLimits|SetUserModeFlags|SetValue|SetVariableMaximum|SetVariableMinimum|SetVariableNumber|SetVariableString|SetVehicleIgnored|SetVehicleKUID|SetVehicleSpeed|SetVelocity|SetVisible|SetVisibleInSurveyor|SetVisibleInViewDetails|SetWaybillIssuePercent|SetWaybillRemain|SetWaybillsWindowVisible|SetWaybillWindowVisible|SetWeather|SetWheelslipMomentumMultiplier|SetWheelslipTractionMultiplier|SetWindowBottom|SetWindowCentered|SetWindowGrow|SetWindowHeight|SetWindowLeft|SetWindowPosition|SetWindowPriority|SetWindowRect|SetWindowRight|SetWindowSize|SetWindowStyle|SetWindowTitle|SetWindowTop|SetWindowVisible|SetWindowWidth|ShouldIgnoreVehicle|ShowDriverButtonMenu|ShowGameOptionsPanel|ShowHelpPopup|ShowInConsistMenu|ShowOnScreenHelp|ShowVehicleProductFilters|Signal|Sleep|Sniff|Sort|SortInternal|SortStringArray|SoundHorn|Sqrt|Start|StartBorder|StartBuild|StartCell|StartFontColor|StartFontColorBlack|StartFontColorWhite|StartIndent|StartLink|StartMeshAnimationLoop|StartMonitoringTrain|StartRow|StartTable|Station|StationMain|Stop|StopAtScenery|StopAtTrackMark|StopAtTrigger|StopMeshAnimation|StopMonitoringTrain|StopSchedule|StopScheduleAndWait|StopSoundScriptEvent|StopTrain|StopTrainGently|StringToUnits|StrSubst|SubdivideItems|SubmitPurchase|SupportsTrainzBuildVersion|SwapTextureOnMesh|SwitchForTrain|SyncQueuesToProducts|TADRequestRefresh|TakeJunction|TakePermitOnTrack|TakeTrackPermit|Test|TestAny|TestTrackPermit|ToFloat|ToggleDrainCocks|ToggleJunction|ToggleScheduleWindow|ToggleViewDetailsWindow|ToggleWaybillsWindowVisible|ToggleWindowVisible|ToInt|Tokens|ToLower|ToUpper|TrackSearch|TracksideIsInFront|TrainzSystemCall|TransferProductFrom|TrimLeft|TrimRight|Turnaround|UnAnnounce|Uncouple|UnitsToString|UnloadProduct|UnpackFloat|UnpackInt|UnpackString|Update|UpdateCabin|UpdateCabinFromSavedData|UpdateExecute|UpdateObjectiveList|UpdatePositionToGroundHeight|UpdatePositionToSurfaceHeight|UpdateRequirementsList|UpdateScheduleWindow|UpdateStationParameters|UpdateViewDetails|UpdateViewDetailsLocomotive|UpdateWaybillsListBrowser|UpdateWaybillsWindow|UserPressKey|UserRequestGoBack|UserRequestToggle|UserSetCamera|UserSetCameraMode|UserSetControl|VehicleExists|ViewDetails|WaitUntilHas|WarnObsolete|WasComplete|WasGranted|WasRunScheduleSuccessful)\\b",
             "name": "support.function.trainzscript"
         },
-        "var": {
-            "begin": "(?!new|else|return)(?=\\b\\w+(?:\\s*\\[\\s*\\])?\\s+\\w+\\b\\s*(?:,|=|;))",
-            "end": "(?=,|=|;)",
+        "variable-declaration": {
+            "begin": "(?!new|else|return)(?=\\b(?:(\\w+)\\s+|(\\w+\\s*\\[\\s*\\])\\s*)(?:\\w+\\s*,\\s*)*\\w+\\s*(?:=|;))",
+            "end": "(?=;|=)",
             "patterns": [
                 {
-                    "begin": "(?=\\w+(?:\\s*\\[\\s*\\])?\\s+\\w+\\b\\s*(?:,|=|;))",
-                    "end": "(?=\\w+\\b\\s*(?:,|=|;))",
+                    "begin": "(?=\\b(?:(\\w+)\\s+|(\\w+\\s*\\[\\s*\\])\\s*)\\w+\\s*(?:,|=|;))",
+                    "end": "(?=\\b\\w+\\s*(?:,|=|;))",
                     "patterns": [
-                        {
-                            "include": "#all-types"
-                        }
+                        { "include": "#all-types" }
                     ]
                 }
-            ]
+            ],
+            "name": "variable.other.source.trainzscript"
+        },
+        "variable": {
+            "match": "\\b(\\w+)\\s*(?=\\+|\\-|\\*|\\\/|%|\\.|=|;|,|or|and|!|<|>|~|\\^|&|\\||\\[|\\]|\\))",
+            "captures": {
+                "1": { 
+                    "name": "variable.other.source.trainzscript" 
+                }
+            }
+        },
+        "method-call": {
+            "match": "\\b(\\w+)\\s*(?=\\()",
+            "name": "entity.name.function.trainzscript"
+        },
+        "field-access": {
+            "match": "(?<=\\.)\\s*(\\w+)\\b\\s*(?!\\()",
+            "captures": {
+                "1": { 
+                    "name": "variable.other.source.trainzscript" 
+                }
+            }
         }
     }
 }

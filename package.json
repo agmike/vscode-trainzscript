@@ -23,26 +23,36 @@
         ],
         "configuration": {
             "title": "TrainzScript",
-            "trainzscript.trainzUtilPath": {
-                "description": "Path to TrainzUtil executable",
-                "type": "string",
-                "scope": "machine-overridable"
-            },
-            "trainzscript.defaultScriptsPath": {
-                "description": "Path to standard scripts",
-                "type": "string",
-                "scope": "machine-overridable"
-            },
-            "trainzscript.additionalIncludeDirectories": {
-                "description": "Additional include directories",
-                "type": "array",
-                "scope": "machine-overridable"
+            "properties": {
+                "trainzscript.trainzUtilPath": {
+                    "description": "Path to TrainzUtil executable",
+                    "type": "string",
+                    "scope": "machine-overridable"
+                },
+                "trainzscript.defaultScriptsPath": {
+                    "description": "Path to standard scripts",
+                    "type": "string",
+                    "scope": "machine-overridable"
+                },
+                "trainzscript.additionalIncludeDirectories": {
+                    "description": "Additional include directories",
+                    "type": "array",
+                    "scope": "machine-overridable"
+                }
             }
         },
         "languages": [
             {
                 "id": "trainzscript",
-                "extensions": [".gs"]
+                "extensions": [".gs"],
+                "aliases": ["TrainzScript", "gs"],
+                "configuration": "./trainzscript-language-configuration.json"
+            },
+            {
+                "id": "trainzconfig",
+                "extensions": [".txt"],
+                "aliases": ["Trainz Asset Configuration", "config.txt"],
+                "filenames": ["config.txt"]
             }
         ],
         "grammars": [
