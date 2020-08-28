@@ -11,11 +11,11 @@
                     "name": "keyword.other.include.trainzscript"
                 },
                 "2": {
-                    "name": "entity.name.file.include.trainzscript"
+                    "name": "string.quoted.double.trainzscript"
                 }
             },
-            "match": "^\\s*(include)\\s+\"([^ ;]*)\"",
-            "name": "meta.include.source.trainzscript"
+            "match": "^\\s*(include)\\s+(\"[^ ;]*\")",
+            "name": "meta.include.trainzscript"
         },
         {
             "include": "#comments"
@@ -28,7 +28,7 @@
         "class": {
             "begin": "(?=\\w?[\\w\\s]*(?:\\bclass\\b)\\s+\\w+)",
             "end": "};",
-            "name": "meta.class.trainzscript",
+            "name": "meta.type.class.trainzscript",
             "patterns": [
                 {
                     "include": "#storage-modifiers"
@@ -46,7 +46,7 @@
                         }
                     },
                     "match": "(\\bclass)\\s+(\\w+)",
-                    "name": "meta.class.identifier.trainzscript"
+                    "name": "meta.type.class.identifier.trainzscript"
                 },
                 {
                     "begin": "\\bisclass\\b",
@@ -68,7 +68,7 @@
                 {
                     "begin": "{",
                     "end": "(?=};)",
-                    "name": "meta.class.body.trainzscript",
+                    "name": "meta.type.class.body.trainzscript",
                     "patterns": [
                         {
                             "include": "#class-body"
@@ -223,7 +223,7 @@
         "method": {
             "begin": "(?!new)(?=\\b\\w+(?:\\s*\\[\\s*\\])?\\s+\\w+\\b\\s*\\()",
             "end": "}|(?=;)",
-            "name": "meta.method.trainzscript",
+            "name": "meta.function.trainzscript",
             "patterns": [
                 {
                     "include": "#storage-modifiers"
@@ -236,14 +236,14 @@
                         }
                     },
                     "end": "(?=\\))",
-                    "name": "meta.method.identifier.trainzscript",
+                    "name": "meta.function.identifier.trainzscript",
                     "patterns": [
                         { "include": "#all-types" },
                         {
                             "match": "\\b(\\w+)\\s*(?=,|\\))",
                             "captures": {
                                 "1": { 
-                                    "name": "variable.parameter.source.trainzscript" 
+                                    "name": "variable.parameter.trainzscript" 
                                 }
                             }
                         }
@@ -252,7 +252,7 @@
                 {
                     "begin": "(?=\\w.*\\s+\\w+\\s*\\()",
                     "end": "(?=\\w+\\s*\\()",
-                    "name": "meta.method.return-type.trainzscript",
+                    "name": "meta.function.return-type.trainzscript",
                     "patterns": [
                         {
                             "include": "#method-return-type"
@@ -262,7 +262,7 @@
                 {
                     "begin": "{",
                     "end": "(?=})",
-                    "name": "meta.method.body.trainzscript",
+                    "name": "meta.function.body.trainzscript",
                     "patterns": [
                         {
                             "include": "#method-body"
@@ -374,7 +374,7 @@
         },
         "storage-modifiers": {
             "match": "\\b(static|final|game|public|define|thread|secured|mandatory)\\b",
-            "name": "storage.modifier.source.trainzscript"
+            "name": "storage.modifier.trainzscript"
         },
         "strings": {
             "patterns": [
@@ -446,13 +446,13 @@
                     ]
                 }
             ],
-            "name": "variable.other.source.trainzscript"
+            "name": "variable.other.trainzscript"
         },
         "variable": {
             "match": "\\b(\\w+)\\s*(?=\\+|\\-|\\*|\\\/|%|\\.|=|;|,|or|and|!|<|>|~|\\^|&|\\||\\[|\\]|\\))",
             "captures": {
                 "1": { 
-                    "name": "variable.other.source.trainzscript" 
+                    "name": "variable.other.trainzscript" 
                 }
             }
         },
@@ -464,7 +464,7 @@
             "match": "(?<=\\.)\\s*(\\w+)\\b\\s*(?!\\()",
             "captures": {
                 "1": { 
-                    "name": "variable.other.source.trainzscript" 
+                    "name": "variable.other.trainzscript" 
                 }
             }
         }
