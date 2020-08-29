@@ -52,7 +52,8 @@
                 "id": "trainzconfig",
                 "extensions": [".txt"],
                 "aliases": ["Trainz Asset Configuration", "config.txt"],
-                "filenames": ["config.txt"]
+                "filenames": ["config.txt"],
+                "configuration": "./trainzconfig-language-configuration.json"
             }
         ],
         "grammars": [
@@ -60,6 +61,11 @@
                 "language": "trainzscript",
                 "scopeName": "source.trainzscript",
                 "path": "./syntaxes/trainzscript.tmLanguage.json"
+            },
+            {
+                "language": "trainzconfig",
+                "scopeName": "source.trainzconfig",
+                "path": "./syntaxes/trainzconfig.tmLanguage.json"
             }
         ],
         "taskDefinitions": [
