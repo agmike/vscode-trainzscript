@@ -1,7 +1,7 @@
 {
     "name": "trainzscript",
     "displayName": "TrainzScript",
-    "description": "TrainzScript scripting language support for Trainz Simulator",
+    "description": "TrainzScript scripting language and config.txt file syntax support for Trainz Railroad Simulator",
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.48.0"
