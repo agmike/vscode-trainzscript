@@ -2,7 +2,9 @@
     "name": "trainzscript",
     "displayName": "TrainzScript",
     "description": "TrainzScript scripting language and config.txt file syntax support for Trainz Railroad Simulator",
-    "version": "0.0.1",
+    "version": "0.1.0",
+    "publisher": "mkrasnenkov",
+    "repository": "https://github.com/mkrasnenkov/vscode-trainzscript",
     "engines": {
         "vscode": "^1.48.0"
     },

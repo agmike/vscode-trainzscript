@@ -10,15 +10,10 @@ Adds syntax highlighting, snippets, and `trainzutil` tasks to make developing sc
 
 ![Example](https://i.imgur.com/trVa3pb.png)
 
-## Extension Settings
+## Installation
 
-This extension contributes the following settings:
-
-* `trainzscript.trainzUtilPath`: path to `trainztuil` executable
-* `trainzscript.defaultScriptsPath`: path to standard scripts which are bundled with Trainz (usually in `scripts/` subfolder)
-* `trainzscript.additionalIncludeDirectories`: additional script directories to search for included files
-
-These settings can be customized in Visual Studio Code globally or per each workspace or directory individually.
+Download the VSIX file from the [releases page](https://github.com/mkrasnenkov/vscode-trainzscript/releases).
+Then install it in VSCode by either double clicking the file, using terminal command `code --install-extension`, from VSCode extensions menu or by running `ctrl+shift+P` install from vsix command.
 
 ## Known Issues
 
@@ -26,6 +21,6 @@ None.
 
 ## Release Notes
 
-### 0.0.1
+### 0.1.0
 
-Work in progress.
+Syntax highlighting for `.gs` and `config.txt` files.
