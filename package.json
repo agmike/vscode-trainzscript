@@ -10,37 +10,9 @@
         "Programming Languages"
     ],
     "activationEvents": [
-        "onCommand:trainzscript.init",
-        "onCommand:workbench.action.tasks.runTask"
     ],
     "main": "./out/extension.js",
     "contributes": {
-        "commands": [
-            {
-                "command": "trainzscript.init",
-                "title": "Initialize TrainzScript Project"
-            }
-        ],
-        "configuration": {
-            "title": "TrainzScript",
-            "properties": {
-                "trainzscript.trainzUtilPath": {
-                    "description": "Path to TrainzUtil executable",
-                    "type": "string",
-                    "scope": "machine-overridable"
-                },
-                "trainzscript.defaultScriptsPath": {
-                    "description": "Path to standard scripts",
-                    "type": "string",
-                    "scope": "machine-overridable"
-                },
-                "trainzscript.additionalIncludeDirectories": {
-                    "description": "Additional include directories",
-                    "type": "array",
-                    "scope": "machine-overridable"
-                }
-            }
-        },
         "languages": [
             {
                 "id": "trainzscript",
@@ -66,11 +38,6 @@
                 "language": "trainzconfig",
                 "scopeName": "source.trainzconfig",
                 "path": "./syntaxes/trainzconfig.tmLanguage.json"
-            }
-        ],
-        "taskDefinitions": [
-            {
-                "type": "trainzscript"
             }
         ]
     },

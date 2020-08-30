@@ -373,7 +373,7 @@
             ]
         },
         "storage-modifiers": {
-            "match": "\\b(static|final|game|public|define|thread|secured|mandatory)\\b",
+            "match": "\\b(static|final|game|public|define|thread|secured|mandatory|native|obsolete)\\b",
             "name": "storage.modifier.trainzscript"
         },
         "strings": {
